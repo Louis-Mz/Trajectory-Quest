@@ -154,7 +154,7 @@ class Game:
         #pygame.draw.rect(self.screen, self.test_col, self.rect)
         #self.test()
 
-        dotted_limit_image = pygame.image.load("mini-jeux/gravitySlingshot/assets/dotted_limit.png")
+        dotted_limit_image = pygame.image.load("games/gravitySlingshot/assets/dotted_limit.png")
         self.screen.blit(dotted_limit_image, (2.8 * SPACING - dotted_limit_image.get_width()//2, 20))
 
         for planet in self.planets:
