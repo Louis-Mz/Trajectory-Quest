@@ -27,55 +27,55 @@ MERCURE_MASS = 6
 MERCURE_SIZE = 80 * SIZE_SCALE
 MERCURE_X = 1 * SPACING
 MERCURE_COLOR = RED
-MERCURE_IMAGE = pygame.image.load("mini-jeux/gravitySlingshot/assets/mercury.png")
+MERCURE_IMAGE = pygame.image.load("games/gravitySlingshot/assets/mercury.png")
 
 VENUS_MASS = 8
 VENUS_SIZE = 90 * SIZE_SCALE
 VENUS_X = 2 * SPACING
 VENUS_COLOR = RED
-VENUS_IMAGE = pygame.image.load("mini-jeux/gravitySlingshot/assets/venus.png")
+VENUS_IMAGE = pygame.image.load("games/gravitySlingshot/assets/venus.png")
 
 EARTH_MASS = 9
 EARTH_SIZE = 100 * SIZE_SCALE
 EARTH_X = 3 * SPACING
 EARTH_COLOR = MEDIUM_LIGHT_BLUE
-EARTH_IMAGE = pygame.image.load("mini-jeux/gravitySlingshot/assets/earth.png")
+EARTH_IMAGE = pygame.image.load("games/gravitySlingshot/assets/earth.png")
 
 MARS_MASS = 7
 MARS_SIZE = 80 * SIZE_SCALE
 MARS_X = 4 * SPACING
 MARS_COLOR = RED
-MARS_IMAGE = pygame.image.load("mini-jeux/gravitySlingshot/assets/mars.png")
+MARS_IMAGE = pygame.image.load("games/gravitySlingshot/assets/mars.png")
 
 JUPITER_MASS = 15
 JUPITER_SIZE = 180 * SIZE_SCALE
 JUPITER_X = 5 * SPACING
 JUPITER_COLOR = RED
-JUPITER_IMAGE = pygame.image.load("mini-jeux/gravitySlingshot/assets/jupiter.png")
+JUPITER_IMAGE = pygame.image.load("games/gravitySlingshot/assets/jupiter.png")
 
 SATURN_MASS = 14
 SATURN_SIZE = 140 * SIZE_SCALE
 SATURN_X = 6 * SPACING
 SATURN_COLOR = RED
-SATURN_IMAGE = pygame.image.load("mini-jeux/gravitySlingshot/assets/saturn.png")
+SATURN_IMAGE = pygame.image.load("games/gravitySlingshot/assets/saturn.png")
 
 URANUS_MASS = 10
 URANUS_SIZE = 100 * SIZE_SCALE
 URANUS_X = 7 * SPACING
 URANUS_COLOR = LIGHT_BLUE
-URANUS_IMAGE = pygame.image.load("mini-jeux/gravitySlingshot/assets/uranus.png")
+URANUS_IMAGE = pygame.image.load("games/gravitySlingshot/assets/uranus.png")
 
 NEPTUNE_MASS = 11
 NEPTUNE_SIZE = 110 * SIZE_SCALE
 NEPTUNE_X = 8 * SPACING
 NEPTUNE_COLOR = MEDIUM_LIGHT_BLUE
-NEPTUNE_IMAGE = pygame.image.load("mini-jeux/gravitySlingshot/assets/neptune.png")
+NEPTUNE_IMAGE = pygame.image.load("games/gravitySlingshot/assets/neptune.png")
 
 PLUTON_MASS = 4
 PLUTON_SIZE = 70 * SIZE_SCALE
 PLUTON_X = 9 * SPACING
 PLUTON_COLOR = RED
-PLUTON_IMAGE = pygame.image.load("mini-jeux/gravitySlingshot/assets/pluton.png")
+PLUTON_IMAGE = pygame.image.load("games/gravitySlingshot/assets/pluton.png")
 
 HOLE_MASS = 6
 HOLE_SIZE = 45 * SIZE_SCALE

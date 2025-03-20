@@ -12,7 +12,7 @@ class Starship:
         self.angle = 0
         self.mass = mass
         self.pts = []
-        self.image = pygame.image.load("mini-jeux/gravitySlingshot/assets/starship.png")
+        self.image = pygame.image.load("games/gravitySlingshot/assets/starship.png")
         self.image = pygame.transform.scale(self.image, (SHIP_SIZE, SHIP_SIZE))
         self.rect = self.image.get_rect(center=(x, y))
         self.mask = pygame.mask.from_surface(self.image)  # Créez un masque pour le vaisseau
@@ -35,7 +35,7 @@ class Starship:
     def rotate(self, angle_change):
         self.angle += angle_change
         rotated_image = pygame.transform.rotate(
-            pygame.transform.scale(pygame.image.load("assets/starship.png"), (SHIP_SIZE, SHIP_SIZE)), -self.angle)
+            pygame.transform.scale(pygame.image.load("games/gravitySlingshot/assets/starship.png"), (SHIP_SIZE, SHIP_SIZE)), -self.angle)
 
         self.image = rotated_image
         self.rect = self.image.get_rect(center=self.rect.center)
