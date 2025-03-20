@@ -19,9 +19,9 @@ font = pygame.font.Font(None, 40)
 
 # Boutons
 buttons = [
-    {"label": "Gravity Slingshot", "pos": (300, 200), "command": "python mini-jeux/gravitySlingshot/main.py"},
-    {"label": "Mini-Jeu 2 (pygame)", "pos": (300, 300), "command": "python jeux/jeu2_pygame/main.py"},
-    {"label": "Mini-Jeu 3 (pixel)", "pos": (300, 400), "command": "python jeux/jeu3_pixel/main.py"},
+    {"label": "Gravity Slingshot", "pos": (300, 200), "command": "python games/gravitySlingshot/main.py"},
+    {"label": "Mini-Jeu 2 (pygame)", "pos": (300, 300), "command": "python games/jeu2_pygame/main.py"},
+    {"label": "Mini-Jeu 3 (pixel)", "pos": (300, 400), "command": "python games/jeu3_pixel/main.py"},
 ]
 
 running = True
