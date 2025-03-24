@@ -163,6 +163,34 @@ class Game:
 
         if self.temp_ship_pos:
             pygame.draw.line(self.screen, WHITE, self.temp_ship_pos, self.mouse_pos, 2)
+
+            #dessin des pointillés
+            pt_x, pt_y = self.temp_ship_pos
+            pt_acc_x = 0
+            pt_acc_y = 0
+            pt_vel_x = (-self.mouse_pos[0] + pt_x) * 0.4 / VEL_SCALE  # calcul of the velocity vect component x
+            pt_vel_y = (-self.mouse_pos[1] + pt_y) * 0.4 / VEL_SCALE  # calcul of the velocity vect component y
+
+            for i in range(0, 200, 10):
+                for planet in self.planets[:1]:
+                    dx = planet.x - pt_x
+                    dy = planet.y - pt_y
+                    distance = math.sqrt(dx ** 2 + dy ** 2)
+
+                    force = (SHIP_MASS * planet.mass) / (distance ** 2)
+                    angle = math.atan2(dy, dx)
+
+                    pt_acc_x = (force / SHIP_MASS) * math.cos(angle)
+                    pt_acc_y = (force / SHIP_MASS) * math.sin(angle)
+
+                    pt_x += pt_vel_x * i + 0.5 * pt_acc_x * i ** 2
+                    pt_y += pt_vel_y * i + 0.5 * pt_acc_y * i ** 2
+                    pt_vel_x += pt_acc_x * i
+                    pt_vel_y += pt_acc_y * i
+
+                pygame.draw.circle(self.screen, WHITE, (pt_x, pt_y), 5)
+
+
             if self.starship != None:
                 self.starship.draw(self.temp_ship_pos[0], self.temp_ship_pos[1], self.screen)
 
@@ -174,6 +202,12 @@ class Game:
                 self.starship.rotate(1)
 
             self.starship.draw(self.starship.x, self.starship.y, self.screen)
+
+            if self.key_pressed.get(pygame.K_SPACE):
+                self.starship.is_boosted = True
+            else:
+                self.starship.is_boosted = False
+
             planet_collided = False
             hole_collided = False
             for planet in self.planets:

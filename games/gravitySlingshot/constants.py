@@ -7,6 +7,10 @@ NUM_PLANETS = 9
 SPACING = WIDTH // (NUM_PLANETS + 1)
 SIZE_SCALE = 2
 
+G = 6 #constante d'attraction gravitationnelle
+FPS = 60
+VEL_SCALE = 500 #to reduce by 500 the velocity that is defined by the distance with the mouse
+
 #colors
 WHITE = (255, 255, 255)
 LIGHT_BLUE = "#E0FBFC"
@@ -14,6 +18,8 @@ MEDIUM_LIGHT_BLUE = "#98C1D9"
 MEDIUM_DARK_BLUE = "#3D5A80"
 DARK_BLUE = "#293241"
 RED = "#EE6C4D"
+GREEN = "#00d500"
+GRAY = "#646464"
 
 #creation des niveaux
 level1 = {"mercure" : [4 * SPACING, 500], "venus" : [6 * SPACING, 220], "earth" : [8 * SPACING, 600]}
@@ -85,7 +91,5 @@ PLANET_COLOR = "#EE6C4D"
 
 SHIP_MASS = 3
 SHIP_SIZE = 30
-
-G = 6 #constante d'attraction gravitationnelle
-FPS = 60
-VEL_SCALE = 500 #to reduce by 500 the velocity that is defined by the distance with the mouse
+BOOST_CHARGE = 250
+BOOST = 0.01
