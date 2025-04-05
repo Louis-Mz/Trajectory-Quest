@@ -18,8 +18,14 @@ font = pygame.font.SysFont(None, 60)
 
 #images
 BACKGROUND = pygame.image.load("assets/menu_bg.jpg")
-BUTTON = pygame.image.load("assets/bouton.png")
+BUTTON = pygame.image.load("assets/button.png")
 BUTTON = pygame.transform.scale(BUTTON, (BUTTON.get_width()*1.05, BUTTON.get_height()*1.05))
+
+INFO_BUTTON = pygame.image.load("assets/info.png")
+INFO_BUTTON = pygame.transform.scale(INFO_BUTTON, (40, 40))
+
+SETTINGS_BUTTON = pygame.image.load("assets/settings.png")
+SETTINGS_BUTTON = pygame.transform.scale(SETTINGS_BUTTON, (40, 40))
 
 # Boutons
 buttons = [
@@ -28,11 +34,15 @@ buttons = [
     {"label": "3", "pos": (867, 492), "command": "python games/jeu2_pygame/main.py"},
 ]
 
+
+
 LEVEL = 2
 
 running = True
 while running:
     screen.blit(BACKGROUND, (0, 0))
+    screen.blit(INFO_BUTTON, (1010, 20))
+    screen.blit(SETTINGS_BUTTON, (940, 20))
 
     # Dessiner les boutons
     for button in buttons[:LEVEL]:
@@ -54,5 +64,6 @@ while running:
                 rect = pygame.Rect(button["pos"], (BUTTON.get_width(), BUTTON.get_height()))
                 if rect.collidepoint(event.pos):
                     subprocess.run(button["command"], shell=True)  # Lancer le mini-jeu
+
 
 pygame.quit()
