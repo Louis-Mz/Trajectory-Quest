@@ -172,7 +172,7 @@ class Game:
             pt_vel_y = (-self.mouse_pos[1] + pt_y) * 0.4 / VEL_SCALE  # calcul of the velocity vect component y
 
             for i in range(0, 200, 10):
-                for planet in self.planets[:1]:
+                for planet in self.planets:
                     dx = planet.x - pt_x
                     dy = planet.y - pt_y
                     distance = math.sqrt(dx ** 2 + dy ** 2)
@@ -210,9 +210,9 @@ class Game:
 
             planet_collided = False
             hole_collided = False
-            for planet in self.planets:
-                self.starship.move(planet)
 
+            self.starship.move(self.planets)
+            for planet in self.planets:
                 # Calculez l'offset entre les positions des deux objets
                 offset = (planet.rect.x - self.starship.rect.x, planet.rect.y - self.starship.rect.y)
 
@@ -228,7 +228,7 @@ class Game:
                     break
                 '''
 
-            self.starship.move(self.black_hole)
+            #self.starship.move(self.black_hole)
             # Calculez l'offset entre les positions des deux objets
             offset = (self.black_hole.rect.x - self.starship.rect.x, self.black_hole.rect.y - self.starship.rect.y)
 

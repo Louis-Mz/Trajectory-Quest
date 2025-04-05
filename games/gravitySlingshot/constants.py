@@ -9,7 +9,7 @@ SIZE_SCALE = 2
 
 G = 6 #constante d'attraction gravitationnelle
 FPS = 60
-VEL_SCALE = 500 #to reduce by 500 the velocity that is defined by the distance with the mouse
+VEL_SCALE = 1000 #to reduce by 500 the velocity that is defined by the distance with the mouse
 
 #colors
 WHITE = (255, 255, 255)
@@ -53,25 +53,25 @@ MARS_X = 4 * SPACING
 MARS_COLOR = RED
 MARS_IMAGE = pygame.image.load("games/gravitySlingshot/assets/mars.png")
 
-JUPITER_MASS = 15
+JUPITER_MASS = 30
 JUPITER_SIZE = 180 * SIZE_SCALE
 JUPITER_X = 5 * SPACING
 JUPITER_COLOR = RED
 JUPITER_IMAGE = pygame.image.load("games/gravitySlingshot/assets/jupiter.png")
 
-SATURN_MASS = 14
+SATURN_MASS = 20
 SATURN_SIZE = 140 * SIZE_SCALE
 SATURN_X = 6 * SPACING
 SATURN_COLOR = RED
 SATURN_IMAGE = pygame.image.load("games/gravitySlingshot/assets/saturn.png")
 
-URANUS_MASS = 10
+URANUS_MASS = 15
 URANUS_SIZE = 100 * SIZE_SCALE
 URANUS_X = 7 * SPACING
 URANUS_COLOR = LIGHT_BLUE
 URANUS_IMAGE = pygame.image.load("games/gravitySlingshot/assets/uranus.png")
 
-NEPTUNE_MASS = 11
+NEPTUNE_MASS = 16
 NEPTUNE_SIZE = 110 * SIZE_SCALE
 NEPTUNE_X = 8 * SPACING
 NEPTUNE_COLOR = MEDIUM_LIGHT_BLUE

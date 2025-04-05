@@ -23,7 +23,7 @@ class Starship:
         self.last_update = pygame.time.get_ticks()  # Temps en millisecondes
 
 
-    def move(self, planet):
+    def move(self, planets):
         current_time = pygame.time.get_ticks()  # Récupérer le temps actuel
         dt = (current_time - self.last_update) / 5
         self.last_update = current_time  # Mise à jour du temps
@@ -31,15 +31,16 @@ class Starship:
         if dt == 0:
             return
 
-        self.move_planet(planet)
-        if self.is_boosted:
-            self.boost()
+        for planet in planets:
+            self.move_planet(planet)
+            if self.is_boosted:
+                self.boost()
 
-        self.x += self.vel_x * dt + 0.5 * self.acc_x * dt ** 2
-        self.y += self.vel_y * dt + 0.5 * self.acc_y * dt ** 2
+            self.x += self.vel_x * dt + 0.5 * self.acc_x * dt ** 2
+            self.y += self.vel_y * dt + 0.5 * self.acc_y * dt ** 2
 
-        self.vel_x += self.acc_x * dt
-        self.vel_y += self.acc_y * dt
+            self.vel_x += self.acc_x * dt
+            self.vel_y += self.acc_y * dt
 
         self.rect.center = (self.x, self.y)
 
