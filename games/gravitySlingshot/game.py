@@ -1,3 +1,5 @@
+import time
+
 import pygame
 import math
 import random
@@ -19,7 +21,8 @@ class Game:
         #self.planet = Planet(self.screen, WIDTH // 2, HEIGHT // 2, PLANET_MASS)
         self.temp_ship_pos = None
         self.mouse_pos = None
-        self.level = 1
+        self.level = 4
+        self.win = False
 
         #self.rect = pygame.Rect(0, 0, 25, 25)
         #self.test_col = (255, 255, 255)
@@ -62,6 +65,7 @@ class Game:
         self.planets.append(Pluton)
 
     def create_level(self):
+        variable_file = "shared_data.txt"
         if self.level <= 4:
             current_level = levels[self.level - 1]
         if self.level == 1:
@@ -108,7 +112,41 @@ class Game:
             self.planets.append(Pluton)
 
         else:
+            self.win = True
             self.create_solar_system()
+            try:
+                with open(variable_file, "r") as f:
+                    value = int(f.read())
+
+                value += 1
+
+                with open(variable_file, "w") as f:
+                    f.write(str(value))
+
+            except Exception as e:
+                print("Erreur d'accès au fichier :", e)
+
+
+    def end_game(self):
+        GAME_END_MENU = pygame.Rect(0, 0, 900, 300)  # rectangle size
+        GAME_END_MENU.center = (WIDTH // 2, HEIGHT // 2 + 10)  # Center in the screen
+        pygame.draw.rect(self.screen, WHITE, GAME_END_MENU)
+        end_text_font = pygame.font.SysFont(None, 20)
+        end_text = """Bravo, aventurier de l’espace !\n
+        \n
+        Tu as brillamment maîtrisé les lois de la gravitation et piloté ta fusée à travers l’univers instable des champs planétaires.\n
+        \n
+        Grâce à ton sens de l'anticipation et à ta compréhension des forces cosmiques, tu as atteint le redoutable trou noir sans te perdre\ndans le vide intersidéral.\n
+        \n
+        Ta mission est loin d’être terminée ! Une dernière épreuve t’attend : le Spiderman Spatial.\n
+        \n
+        Ferme ce mini-jeu pour retourner au menu principal, et poursuis ta quête intergalactique vers le titre de Maître du Mouvement !"""
+        lines = end_text.split("\n")
+        y = HEIGHT // 2 - 300//2 + 40  # Position Y de départ
+        for line in lines:
+            rendered_line = end_text_font.render(line.strip(), True, (0, 0, 0))  # Black text
+            self.screen.blit(rendered_line, (100, y))
+            y += 10  # Space between lines
 
     '''
     def test(self):
@@ -247,6 +285,9 @@ class Game:
                 self.planets = []
                 self.level += 1
                 self.create_level()
+
+        if self.win:
+            self.end_game()
 
         pygame.display.flip()
 

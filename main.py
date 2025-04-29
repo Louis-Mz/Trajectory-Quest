@@ -1,5 +1,7 @@
 import pygame
 import subprocess
+import time
+import os
 
 # Initialisation de pygame
 pygame.init()
@@ -40,9 +42,9 @@ EXIT_BUTTON = pygame.transform.scale(EXIT_BUTTON, (EXIT_BUTTON.get_width(), EXIT
 
 # Boutons
 level_buttons = [
-    {"label": "1", "pos": (126, 347), "command": "python games/jeu3_pixel/main.py"},
+    {"label": "1", "pos": (126, 347), "command": "python games/jeu1_pixel/main.py"},
     {"label": "2", "pos": (518, 150), "command": "python games/gravitySlingshot/main.py"},
-    {"label": "3", "pos": (867, 492), "command": "python games/jeu2_pygame/main.py"},
+    {"label": "3", "pos": (867, 492), "command": "python games/spiderman/spiderman_spiderman_meteor_graph.py"},
 ]
 
 other_buttons = [
@@ -95,10 +97,32 @@ INFO_RECT.center = (WIDTH // 2, HEIGHT // 2 + 10)  # On place son centre au mili
 SETTINGS_RECT = pygame.Rect(0, 0, 900, 500)  # Taille du rectangle
 SETTINGS_RECT.center = (WIDTH // 2, HEIGHT // 2 + 10)  # On place son centre au milieu de l'écran
 
+MINI_GAME_RECT = pygame.Rect(0, 0, WIDTH, HEIGHT)  # Taille du rectangle
+MINI_GAME_RECT.center = (WIDTH // 2, HEIGHT // 2)  # On place son centre au milieu de l'écran
+PLAYING_MINI_GAME = False
+
 LEVEL = 2
 WINDOW = 0 #0 = première fenêtre, 1 = fenêtre menu, 2 = aide ?
 HELP_OPENED = 0
 SETTINGS_OPENED = 0
+
+# ======================= Crée le fichier partagé s'il n'existe pas ====================
+variable_file = "shared_data.txt"
+if not os.path.exists(variable_file):
+    with open(variable_file, "w") as f:
+        f.write(str(LEVEL))
+with open(variable_file, "w") as f:
+    f.write(str(LEVEL))
+# =====================================================================================
+"""
+def is_playing_display():
+    print("fonction yes")
+    pygame.draw.rect(screen, (0, 0, 0), MINI_GAME_RECT)
+    text = font.render("Allez sur la fenêtre du jeu !", True, WHITE)
+    # Calculer la position du texte pour le centrer sur le bouton
+    text_rect = text.get_rect(center=(WIDTH // 2, HEIGHT // 2))
+    screen.blit(text, text_rect)
+"""
 
 running = True
 while running:
@@ -125,6 +149,18 @@ while running:
         screen.blit(BACKGROUND, (0, 0))
         screen.blit(INFO_BUTTON, other_buttons[1]["pos"])
         screen.blit(SETTINGS_BUTTON, other_buttons[0]["pos"])
+
+        # ============================ LIRE la variable partagée ===========================
+        try:
+            with open(variable_file, "r") as f:
+                new_value = int(f.read())
+
+            if new_value != LEVEL:
+                print(f"LEVEL mis à jour : {new_value}")
+                LEVEL = new_value
+        except Exception as e:
+            print("Erreur lecture fichier :", e)
+        # =====================================================================================
 
         # Dessiner les boutons
         for button in level_buttons[:LEVEL]:
@@ -156,7 +192,9 @@ while running:
                 for button in level_buttons:
                     rect = pygame.Rect(button["pos"], (BUTTON.get_width(), BUTTON.get_height()))
                     if rect.collidepoint(event.pos) and LEVEL >= int(button["label"]) and HELP_OPENED == 0 and SETTINGS_OPENED == 0:
+                        #is_playing_display()
                         subprocess.run(button["command"], shell=True)  # Lancer le mini-jeu
+
                 for button in other_buttons:
                     rect = pygame.Rect(button["pos"], (SMALL_BUTTON_SIZE, SMALL_BUTTON_SIZE))
                     if rect.collidepoint(event.pos):
@@ -177,6 +215,9 @@ while running:
                                 SETTINGS_OPENED = 0
 
     pygame.display.flip()
+
+    #-----------------------------------------------------------------------------------
+
 
 
 pygame.quit()
