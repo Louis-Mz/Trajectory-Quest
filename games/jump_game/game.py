@@ -143,10 +143,47 @@ class Game:
         elif self.state == STATE_WIN:
             if not self.state == self.previousstate:
                 print("Bravo tu as gagné !!!!")
+                variable_file = "shared_data.txt"
+                try:
+                    with open(variable_file, "r") as f:
+                        value = int(f.read())
+
+                    value += 1
+
+                    with open(variable_file, "w") as f:
+                        f.write(str(value))
+
+                except Exception as e:
+                    print("Erreur d'accès au fichier :", e)
+
+            """
             image = pygame.transform.scale(pygame.image.load("games/jump_game/images/win.png"), (292, 49))
             rect = image.get_rect()
             rect.center = (int(pygame.display.get_surface().get_width()/2),int(pygame.display.get_surface().get_height() /2))
             self.screen.blit(image,rect)
+            """
+            GAME_END_MENU = pygame.Rect(0, 0, 900, 300)  # rectangle size
+            GAME_END_MENU.center = (pygame.display.get_surface().get_width()//2, pygame.display.get_surface().get_height()//2 + 10)  # Center in the screen
+            pygame.draw.rect(self.screen, (255, 255, 255), GAME_END_MENU)
+            end_text_font = pygame.font.SysFont(None, 20)
+            end_text = """Mission accomplie, acrobate cosmique !\n
+            \n
+            Tu as su dompter la gravité et exploiter la puissance de ton saut avec précision.\nChaque trajectoire que tu as dessinée dans l’espace témoigne de ton talent pour la physique du mouvement.\n
+            \n
+            Tu viens de franchir la première étape de ta quête interstellaire !
+            \n
+            Mais ce n’était qu’un échauffement... Il est temps de prendre les commandes d’une fusée et de défier les lois\nde l’attraction gravitationnelle dans le mini-jeu suivant : Slingshot Gravity.\n
+            \n
+            Appuie sur la touche ESPACE pour fermer ce mini-jeu et retourner au menu principal.\n
+            \n
+            La suite de l’aventure t’attend, astronaute courageux !"""
+            lines = end_text.split("\n")
+            y = pygame.display.get_surface().get_height()//2 - 300 // 2 + 40  # Position Y de départ
+            for line in lines:
+                rendered_line = end_text_font.render(line.strip(), True, (0, 0, 0))  # Black text
+                self.screen.blit(rendered_line, (350, y))
+                y += 10  # Space between lines
+
         else:
             #affiche les vies
             for i in range (0,self.lives):
