@@ -42,7 +42,7 @@ EXIT_BUTTON = pygame.transform.scale(EXIT_BUTTON, (EXIT_BUTTON.get_width(), EXIT
 
 # Boutons
 level_buttons = [
-    {"label": "1", "pos": (126, 347), "command": "python games/jeu1_pixel/main.py"},
+    {"label": "1", "pos": (126, 347), "command": "python games/jump_game/main.py"},
     {"label": "2", "pos": (518, 150), "command": "python games/gravitySlingshot/main.py"},
     {"label": "3", "pos": (867, 492), "command": "python games/spiderman/spiderman_spiderman_meteor_graph.py"},
 ]
