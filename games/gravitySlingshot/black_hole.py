@@ -1,6 +1,7 @@
 import pygame
 from constants import *
 
+#classe du trou noir
 class Hole:
     def __init__(self, screen, x, y, mass, size):
         self.screen = screen
@@ -13,5 +14,6 @@ class Hole:
         self.rect = self.image.get_rect(center=(self.x, self.y))
         self.mask = pygame.mask.from_surface(self.image)
 
+    #méthode de dessin du trou noir
     def draw(self, x, y, screen):
         screen.blit(self.image, (x - HOLE_SIZE // 2, y - HOLE_SIZE // 2))

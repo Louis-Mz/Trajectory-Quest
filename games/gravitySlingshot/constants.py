@@ -1,6 +1,5 @@
 import pygame
 #game constantes
-
 WIDTH = 1080
 HEIGHT = 720
 NUM_PLANETS = 9
@@ -9,9 +8,9 @@ SIZE_SCALE = 2
 
 G = 6 #constante d'attraction gravitationnelle
 FPS = 60
-VEL_SCALE = 1000 #to reduce by 500 the velocity that is defined by the distance with the mouse
+VEL_SCALE = 1000 #pour réduire par 1000 la vitesse qui est definie par la distance avec la souris
 
-#colors
+#couleurs
 WHITE = (255, 255, 255)
 LIGHT_BLUE = "#E0FBFC"
 MEDIUM_LIGHT_BLUE = "#98C1D9"
@@ -20,6 +19,7 @@ DARK_BLUE = (33, 35, 60)
 RED = "#EE6C4D"
 GREEN = "#00d500"
 GRAY = "#646464"
+PLANET_COLOR = "#EE6C4D"
 
 #creation des niveaux
 level1 = {"mercure" : [4 * SPACING, 500], "venus" : [6 * SPACING, 220], "earth" : [8 * SPACING, 600]}
@@ -28,7 +28,7 @@ level3 = {"jupiter" : [4 * SPACING, 610], "saturn" : [6 * SPACING, 200], "uranus
 level4 = {"uranus" : [4 * SPACING, 240], "neptune" : [6 * SPACING, 520], "pluton" : [8 * SPACING, 210]}
 levels = [level1, level2, level3, level4]
 
-#planètes
+#constantes des planètes
 MERCURE_MASS = 6
 MERCURE_SIZE = 80 * SIZE_SCALE
 MERCURE_X = 1 * SPACING
@@ -83,14 +83,13 @@ PLUTON_X = 9 * SPACING
 PLUTON_COLOR = RED
 PLUTON_IMAGE = pygame.image.load("games/gravitySlingshot/assets/pluton.png")
 
+#constantes du trou noir
 HOLE_MASS = 6
 HOLE_SIZE = 45 * SIZE_SCALE
 HOLE_X = 9.5 * SPACING
 
-PLANET_COLOR = "#EE6C4D"
-
+#vaisseau du vaisseau
 SHIP_MASS = 3
 SHIP_SIZE = 30
 BOOST_CHARGE = 250
 BOOST = 0.01
-

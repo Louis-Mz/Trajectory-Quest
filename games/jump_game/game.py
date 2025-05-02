@@ -1,12 +1,13 @@
 from time import sleep
 
+#import des bibliothèques
 import pytmx
 import pyscroll
 import math
 import time
 import pygame
-from pygame.sprite import Sprite, AbstractGroup
 
+#import des classes d'autres fichiers
 from player import Player, PLAYER_PARABOLIC, PLAYER_INLINE
 from player import Fleche
 from player import Bande
@@ -16,13 +17,14 @@ from collision import Sol
 from collision import Obstacle
 from collision import Pieu
 
+#constantes
 STATE_RUNNING = 0
 STATE_WIN = 1
 STATE_GAMEOVER = 2
 STATE_PIEUX = 3
 
+#classe du jeu
 class Game:
-
     def __init__(self, screen):
         self.screen = screen
         self.running = True
@@ -55,19 +57,19 @@ class Game:
         self.player.add(self.group)
         self.player_previous_position = self.player.getposition()
 
-        # créer fleche
+        # créer la fleche
         self.fleche = Fleche((self.player.x + 150)*self.map_layer.zoom, (self.player.y-50 )*self.map_layer.zoom)
         self.fleche.add(self.group)
         self.angle = -90
 
-        #init bande position according to player position
+        #initialise la position de la bande de puissance en fonction de la position du joueur
         self.bande=Bande((self.player.x + 90) * self.map_layer.zoom,(self.player.y - 30) * self.map_layer.zoom)
         self.bande_up = True
         self.bande_down = False
 
         self.liveIcon = pygame.transform.scale(pygame.image.load("games/jump_game/images/Heart-icon.png"), (48,48))
 
-        # init curseur position according to player position
+        # initialise la position du curseur selon la position du joueur
         self.curseur=Curseur(self.bande.rect.centerx * self.map_layer.zoom,self.bande.rect.bottom * self.map_layer.zoom)
 
         self.phase = 1
@@ -82,21 +84,23 @@ class Game:
         self.collision_coordinate = (0, 0)
 
         for objGroups in tmx_data.objectgroups:
-            print(objGroups.name)
-            for obj in objGroups:
+            #print(objGroups.name)
+            for obj in objGroups: #ajout d'instances dans les objets du jeu
                 if obj.type == "sol":
-                    print(obj.type, obj.x, obj.y)
+                    #print(obj.type, obj.x, obj.y)
                     self.sol.add(Sol(obj.x, obj.y, obj.width, obj.height))
                 if obj.type == "obstacle":
                     self.obstacles.add(Obstacle(obj.x, obj.y, obj.width, obj.height))
                 if obj.type == "pieu":
-                    print(obj.type, obj.x, obj.y)
+                    #print(obj.type, obj.x, obj.y)
                     self.pieux.add(Pieu(obj.x, obj.y, obj.width, obj.height))
 
+    #méthode qui gère les événements clavier/souris
     def handling_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
+
         pressed = pygame.key.get_pressed()
 
         if pressed[pygame.K_SPACE]:
@@ -118,31 +122,41 @@ class Game:
                 self.phase=2
                 self.angle=abs(self.angle)-90 # on remet l'angle entre -90° et 90°, 0° est la verticale
 
+    #méthode qui gère les affichages
     def display(self):
-        if self.phase ==1:
+        #affichage selon les différentes phase du saut
+        if self.phase == 1:
             self.bande.remove(self.group)
             self.curseur.remove(self.group)
             self.fleche.add(self.group)
-        elif self.phase==2 or self.phase==3:
-            if not   self.group.has(self.bande):
+
+        elif self.phase == 2 or self.phase == 3:
+            if not self.group.has(self.bande):
                 self.bande.add(self.group)
             if not self.group.has(self.curseur):
                 self.curseur.add(self.group)
+
         else:
             self.fleche.remove(self.group)
             self.curseur.remove(self.group)
             self.bande.remove(self.group)
+
         self.group.draw(self.screen)
-        if self.state ==  STATE_GAMEOVER:
+        ## affichage des victoires et défaites
+        #défaite
+        if self.state == STATE_GAMEOVER:
             if not self.state == self.previousstate:
                 print("Perdu!!!!")
             image = pygame.transform.scale(pygame.image.load("games/jump_game/images/loose.png"), (292, 49))
             rect = image.get_rect()
             rect.center = (int(pygame.display.get_surface().get_width()/2),int(pygame.display.get_surface().get_height() /2))
             self.screen.blit(image,rect)
+
+        #victoire
         elif self.state == STATE_WIN:
             if not self.state == self.previousstate:
                 print("Bravo tu as gagné !!!!")
+                #modifie la valeur du niveau dans le fichier texte partagé avec le menu principal
                 variable_file = "shared_data.txt"
                 try:
                     with open(variable_file, "r") as f:
@@ -156,13 +170,8 @@ class Game:
                 except Exception as e:
                     print("Erreur d'accès au fichier :", e)
 
-            """
-            image = pygame.transform.scale(pygame.image.load("games/jump_game/images/win.png"), (292, 49))
-            rect = image.get_rect()
-            rect.center = (int(pygame.display.get_surface().get_width()/2),int(pygame.display.get_surface().get_height() /2))
-            self.screen.blit(image,rect)
-            """
-            GAME_END_MENU = pygame.Rect(0, 0, 900, 300)  # rectangle size
+            ## affichage des instructions en cas de victoire
+            GAME_END_MENU = pygame.Rect(0, 0, 900, 300)  # taille du rectangle d'instruction
             GAME_END_MENU.center = (pygame.display.get_surface().get_width()//2, pygame.display.get_surface().get_height()//2 + 10)  # Center in the screen
             pygame.draw.rect(self.screen, (255, 255, 255), GAME_END_MENU)
             end_text_font = pygame.font.SysFont(None, 20)
@@ -180,9 +189,9 @@ class Game:
             lines = end_text.split("\n")
             y = pygame.display.get_surface().get_height()//2 - 300 // 2 + 40  # Position Y de départ
             for line in lines:
-                rendered_line = end_text_font.render(line.strip(), True, (0, 0, 0))  # Black text
+                rendered_line = end_text_font.render(line.strip(), True, (0, 0, 0))
                 self.screen.blit(rendered_line, (350, y))
-                y += 10  # Space between lines
+                y += 10  # espace entre les lignes
 
         else:
             #affiche les vies
@@ -192,7 +201,7 @@ class Game:
                 self.screen.blit(self.liveIcon, rectlive)
         pygame.display.update()
 
-    def setvariables(self):
+    def setvariables(self): #méthode qui permet de modifier les valeurs des variables du jeu en cours d'exécution
         if self.phase == 1:
             if self.rotation_droite:
                 self.angle = self.angle - 1.3
@@ -206,6 +215,7 @@ class Game:
                 if self.angle > 0:
                     self.rotation_droite = True
                     self.rotation_gauche = False
+
         if self.phase == 2 or self.phase ==  3:
             if self.bande_down:
                 self.curseur.move(0,3)
@@ -218,12 +228,12 @@ class Game:
                     self.bande_down = True
                     self.bande_up = False
 
-    def managecolisions(self):
+    def managecolisions(self): #méthode de gestion des collisions
        #test collision avec le sol
        colision_list =  pygame.sprite.spritecollide(self.player,self.sol,False)
        for obj in colision_list:
             self.collision_coordinate = (self.player.x, obj.rect.top)
-            print("collision avec le sol (", self.collision_coordinate[0], " , ", self.collision_coordinate[1], ") !!!")
+            #print("collision avec le sol (", self.collision_coordinate[0], " , ", self.collision_coordinate[1], ") !!!")
             self.player.setposition(self.collision_coordinate[0], self.collision_coordinate[1]-5)
             self.initphase1()
             return True
@@ -232,18 +242,17 @@ class Game:
        colision_list = pygame.sprite.spritecollide(self.player, self.obstacles, False)
        for obj in colision_list:
            self.collision_coordinate = (self.player.x, obj.rect.bottom+self.player.rect.height+1)
-           print("collision avec un obstacle (",self.collision_coordinate[0]," , ",self.collision_coordinate[1],") !!!")
+           #print("collision avec un obstacle (",self.collision_coordinate[0]," , ",self.collision_coordinate[1],") !!!")
            self.player.setposition(self.collision_coordinate[0], self.collision_coordinate[1])
            self.player.movement=PLAYER_INLINE
            return True
 
        # test si le joueur touche des pieux
        colision_list = pygame.sprite.spritecollide(self.player, self.pieux, False)
-       #pygame.sprite.spritecollideany(self.player, self.pieux)
        if len(colision_list)>0: # si pieux touché, perd une vie
-           print("collision avec un pieu !!!")
+           #print("collision avec un pieu !!!")
            self.lives=self.lives-1
-           print("il me reste ",self.lives," vie")
+           #print("il me reste ",self.lives," vie")
            if self.lives == 0: # si plus de vie alors perdu
                self.player.load_player(2)
                self.state = STATE_GAMEOVER
@@ -272,13 +281,13 @@ class Game:
         self.bande.setposition(self.player.x + (90 * self.map_layer.zoom), self.player.y - (30 * self.map_layer.zoom))
         self.curseur.setposition(self.bande.rect.centerx, self.bande.rect.bottom)
 
-    def run(self):
+    def run(self): #boucle du jeu
         self.initphase1()
         blink = 12
         while self.running:
-            if self.state==STATE_PIEUX:
+            if self.state == STATE_PIEUX:
                 self.player.load_player(1+(blink % 2))
-                blink = blink -1
+                blink = blink - 1
                 if blink == 0:
                     self.player.setposition(self.start_point.x, self.start_point.y)
                     self.map_layer.center((int(pygame.display.get_surface().get_width() / 2),
@@ -286,35 +295,54 @@ class Game:
                                                pygame.display.get_surface().get_height() / 2)))
                     self.player.load_player(1)
                     self.initphase1()
-                    blink=12
+                    blink = 12
                     self.state = STATE_RUNNING
             self.handling_events()
             self.setvariables()
-            if self.phase == 4: #dans l'étape déplacement du player
+
+            if self.phase == 4: #dans l'étape déplacement du joueur
                 if self.player.movement == PLAYER_PARABOLIC:
+                    # Calcul du déplacement horizontal (deltax) en fonction de la vitesse initiale, de l'angle de tir et du temps écoulé
+                    # On convertit l'angle de degrés en radians
                     deltax = (self.vitesse * math.cos((self.angle * math.pi) / 180) * self.temps)
-                    if self.angle<0:
+                    # Si l'angle est négatif, c'est un tir vers la gauche, donc on inverse le déplacement horizontal
+                    if self.angle < 0:
                         deltax = -deltax
-                    deltay = deltax * math.tan((self.angle * math.pi) / 180) - ((9.81 * deltax ** 2) / (2 * self.vitesse ** 2 * (math.cos((self.angle * math.pi) / 180) ** 2)))
+                    # Calcul du déplacement vertical (deltay) en utilisant l'équation de la trajectoire parabolique
+                    # Cette équation prend en compte l'angle de tir, la vitesse initiale, le temps écoulé et l'accélération due à la gravité (9.81 m/s²)
+                    deltay = deltax * math.tan((self.angle * math.pi) / 180) - ((9.81 * deltax ** 2) / (
+                                2 * self.vitesse ** 2 * (math.cos((self.angle * math.pi) / 180) ** 2)))
+
+                    # Application du déplacement au joueur. On multiplie par 10 pour ajuster l'échelle du déplacement en pixels
+                    # Le déplacement vertical est négatif car dans Pygame, l'axe Y pointe vers le bas
                     self.player.move_ip(int(10 * deltax), int(-10 * deltay))
-                    if self.player.x >= (pygame.display.get_surface().get_width()/2) - self.player.rect.width :
-                        self.map_layer.scroll((int(10 * deltax ), 0))
-                    if self.player.y <= (pygame.display.get_surface().get_width()/2) :
-                        if deltay<0:
-                            self.map_layer.scroll((0,int(-10 * deltay)))
-                        elif deltay>0:
+
+                    # défilement horizontal de la carte si le joueur atteint le milieu de l'écran
+                    if self.player.x >= (pygame.display.get_surface().get_width() / 2) - self.player.rect.width:
+                        self.map_layer.scroll((int(10 * deltax), 0))
+
+                    # défilement vertical de la carte si le joueur atteint le milieu de l'écran verticalement
+                    if self.player.y <= (pygame.display.get_surface().get_width() / 2):
+                        # Si le joueur monte (deltay est négatif), on fait défiler la carte vers le haut
+                        if deltay < 0:
+                            self.map_layer.scroll((0, int(-10 * deltay)))
+                        # Si le joueur descend (deltay est positif), on fait défiler la carte vers le bas
+                        elif deltay > 0:
                             self.map_layer.scroll((0, int(10 * deltay)))
-                    #if self.player.y >= (pygame.display.get_surface().get_width() / 2) + self.player.rect.height:
-                        #self.map_layer.scroll((0, int(10 * deltay)))
-                    self.temps += (1 / self.clock.get_fps() )
+
+                    # Incrémentation du temps écoulé depuis le début du saut
+                    # inverse du nombre d'images par seconde (fps) pour obtenir le temps écoulé entre chaque frame (car f = 1/T)
+                    self.temps += (1 / self.clock.get_fps())
+                    # si le joueur est en haut de l'écran, on change le mode de déplacement du joueur à PLAYER_INLINE (mouvement linéaire ou au sol)
                     if self.player.y <= 0:
                         self.player.setmotion(PLAYER_INLINE)
                 else:
+                    #si le mode de déplacement du joueur n'est pas parabolique, on applique un mouvement vertical de -30 vers le bas pour simuler la chute
                     self.player.move_ip(0, 30)
 
                 self.managecolisions()
 
-                #veririfier si le player est hors de l'écran x<0 x>width
+                #veririfier si le player est hors de l'écran x < 0 x > width
                 if self.player.x <= 0:
                     self.player.setposition(20,self.player.y)
                     self.player.setmotion(PLAYER_INLINE)
@@ -326,7 +354,6 @@ class Game:
                     self.initphase1()
                 self.clock.tick(25)
             else:
-                #self.temps=0
                 self.clock.tick(60)
             self.display()
             self.previousstate=self.state
