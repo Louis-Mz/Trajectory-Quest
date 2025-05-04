@@ -117,6 +117,10 @@ class Game:
                 self.bande_down = True
                 self.phase = 3
                 time.sleep(0.2)
+                if self.angle>0:
+                    self.angle = 90-self.angle
+                else:
+                    self.angle = -90 - self.angle
             if self.phase==1:
                 self.bande_down = True
                 self.phase=2
