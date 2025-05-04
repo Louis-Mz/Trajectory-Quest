@@ -4,6 +4,7 @@ import pygame
 from game import Game
 
 pygame.init()
+pygame.display.set_caption("Jump Plateformer !") #titre
 DESKTOP_SIZE=pygame.display.get_desktop_sizes()[0]
 SCREEN_WIDTH=1500
 SCREEN_HEIGHT=800

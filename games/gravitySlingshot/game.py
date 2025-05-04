@@ -284,6 +284,9 @@ class Game:
 
     # boucle du jeu qui appelle toutes les méthodes nécessaires
     def run(self):
+        pygame.mixer.init()
+        pygame.mixer.music.load("games/gravitySlingshot/assets/stellar.mp3")
+        pygame.mixer.music.play(-1)
         while self.running:
             self.handling_events()
             self.display()
