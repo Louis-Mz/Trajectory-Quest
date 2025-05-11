@@ -196,9 +196,7 @@ class App:
         x = FENETRE // 2 - len(texte) * 4
         y = FENETRE // 2 - 10
         # Afficher le texte GAME OVER en blanc
-        for dy in [0, 1]:
-            for dx in [0, 1]:
-                py.text(x + dx, y + dy, texte, 0)  # Ombre noire
+
         py.text(x, y, texte, 7)  # Texte blanc
         # Afficher le score juste en dessous, en jaune
         x_score = FENETRE // 2 - len(score_txt) * 4
