@@ -102,7 +102,7 @@ MINI_GAME_RECT = pygame.Rect(0, 0, WIDTH, HEIGHT)  # Taille du rectangle
 MINI_GAME_RECT.center = (WIDTH // 2, HEIGHT // 2)  # On place son centre au milieu de l'écran
 PLAYING_MINI_GAME = False
 
-LEVEL = 3 #nombre de mini-jeux débloqués
+LEVEL = 1 #nombre de mini-jeux débloqués
 WINDOW = 0 #0 = première fenêtre, 1 = fenêtre menu
 HELP_OPENED = 0
 SETTINGS_OPENED = 0
