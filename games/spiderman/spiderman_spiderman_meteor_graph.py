@@ -190,7 +190,23 @@ class App:
     #écran de défaite
     def game_over(self):
         py.cls(0)
-        py.text(FENETRE/2, FENETRE/2, "GAME OVER", 7)
+        texte = "GAME OVER"
+        score_txt = "SCORE : " + str(self.score)
+        # Calcul pour centrer le texte (chaque lettre fait 4x6 px en taille normale, ici x2)
+        x = FENETRE // 2 - len(texte) * 4
+        y = FENETRE // 2 - 10
+        # Afficher le texte GAME OVER en blanc
+        for dy in [0, 1]:
+            for dx in [0, 1]:
+                py.text(x + dx, y + dy, texte, 0)  # Ombre noire
+        py.text(x, y, texte, 7)  # Texte blanc
+        # Afficher le score juste en dessous, en jaune
+        x_score = FENETRE // 2 - len(score_txt) * 4
+        y_score = y + 15
+        for dy in [0, 1]:
+            for dx in [0, 1]:
+                py.text(x_score + dx, y_score + dy, score_txt, 0)
+        py.text(x_score, y_score, score_txt, 10)  # Jaune
 
     #méthode de mise à jour des objet du jeu
     def update(self):
